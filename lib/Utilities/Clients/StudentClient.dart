@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:hansenberg_app_core/Models/Student.dart';
-import 'package:hansenberg_app_core/Utilities/Clients/HttpClient.dart';
+import 'package:hansenberg_app_core/Utilities/Clients/TokenClient.dart';
 import 'package:intl/intl.dart';
 
-class StudentClient {
-  const StudentClient({required this.httpClient});
-
-  final HttpClient httpClient;
+class StudentClient extends TokenClient {
+  const StudentClient({required httpClient}) : super(httpClient: httpClient);
 
   Future<String> registerStudent(String name, DateTime enrolledFrom, DateTime enrolledTo) async {
     final response = await httpClient.post(
