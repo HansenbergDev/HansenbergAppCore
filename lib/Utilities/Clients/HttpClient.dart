@@ -12,21 +12,20 @@ class HttpClient {
   static const Duration defaultTimeoutDuration = Duration(seconds: 1);
 
   Future<http.Response> get({required String endpoint, Map<String, String> params = const {}, Map<String, String> headers = const {}}) {
-    String formattedParams = "";
-
-    if (params.isNotEmpty) {
-      formattedParams = "?";
-
-
-      for (var key in params.keys) {
-        formattedParams = "$formattedParams$key=${params[key]}&";
-      }
-
-      formattedParams = formattedParams.substring(0, formattedParams.length - 1);
-    }
+    // String formattedParams = "";
+    //
+    // if (params.isNotEmpty) {
+    //   formattedParams = "?";
+    //
+    //   for (var key in params.keys) {
+    //     formattedParams = "$formattedParams$key=${params[key]}&";
+    //   }
+    //
+    //   formattedParams = formattedParams.substring(0, formattedParams.length - 1);
+    // }
 
     // final path = '$base$endpoint$formattedParams';
-    final uri = Uri.http(urlBase, '$endpointBase$endpoint$formattedParams');
+    final uri = Uri.http(urlBase, '$endpointBase$endpoint', params);
     print(uri);
 
     return http.get(
