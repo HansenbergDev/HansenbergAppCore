@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class WeekNavigator {
-  const WeekNavigator({required this.context, required this.week});
+class MaterialWeekNavigator {
+  const MaterialWeekNavigator({required this.context, required this.week});
 
   final BuildContext context;
   final int week;

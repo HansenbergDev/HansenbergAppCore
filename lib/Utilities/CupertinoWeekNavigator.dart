@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class WeekNavigator {
-  const WeekNavigator({required this.context, required this.week});
+class CupertinoWeekNavigator {
+  const CupertinoWeekNavigator({required this.context, required this.week});
 
   final BuildContext context;
   final int week;
