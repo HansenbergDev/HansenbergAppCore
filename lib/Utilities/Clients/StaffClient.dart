@@ -8,7 +8,9 @@ class StaffClient extends TokenClient {
   Future<String?> loginStaff(String username, String password) async {
     final response = await httpClient.post(
         endpoint: '/staff/login',
-        headers: <String, String> { },
+        headers: <String, String> {
+          'Content-Type': 'application/json'
+        },
         body: <String, dynamic> {
           'username': username,
           'password': password,
