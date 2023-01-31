@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 class StudentClient extends TokenClient {
   const StudentClient({required httpClient}) : super(httpClient: httpClient);
 
+  //TODO: Måske denne funktion ikke skal smide en Exception, men i stedet returnere null?
   Future<String> registerStudent(String name, DateTime enrolledFrom, DateTime enrolledTo) async {
     final response = await httpClient.post(
       endpoint: '/student/register',
