@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:hansenberg_app_core/Utilities/util.dart';
 
 class TextfieldWithTitle extends StatelessWidget {
-  const TextfieldWithTitle({Key? key, required this.title, required this.placeholder, required this.controller}) : super(key: key);
+  const TextfieldWithTitle({Key? key, required this.title, required this.placeholder, required this.controller, required this.obscureText}) : super(key: key);
 
   final String title;
   final String placeholder;
   final TextEditingController controller;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
