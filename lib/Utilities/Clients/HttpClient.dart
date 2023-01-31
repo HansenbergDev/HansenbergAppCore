@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -6,6 +7,8 @@ class HttpClient {
   HttpClient({required this.base});
 
   final String base;
+
+  static const Duration defaultTimeoutDuration = Duration(seconds: 1);
 
   Future<http.Response> get({required String endpoint, Map<String, String> params = const {}, Map<String, String> headers = const {}}) {
     String formattedParams = "";
@@ -24,7 +27,7 @@ class HttpClient {
     final path = '$base$endpoint$formattedParams';
     final uri = Uri.parse(path);
 
-    return http.get(uri, headers: headers);
+    return http.get(uri, headers: headers).timeout(defaultTimeoutDuration, onTimeout: () { return http.Response('Error', 408); });
   }
 
   Future<http.Response> post({required String endpoint, required Map<String, String> headers, required Map<String, dynamic> body}) {
@@ -32,7 +35,7 @@ class HttpClient {
       Uri.parse("$base$endpoint"),
       headers: headers,
       body: jsonEncode(body),
-    );
+    ).timeout(defaultTimeoutDuration, onTimeout: () { return http.Response('Error', 408); });
   }
 
   Future<http.Response> patch({required String endpoint, required Map<String, String> headers, required Map<String, dynamic> body}) {
@@ -40,7 +43,7 @@ class HttpClient {
         Uri.parse("$base$endpoint"),
         headers: headers,
         body: jsonEncode(body)
-    );
+    ).timeout(defaultTimeoutDuration, onTimeout: () { return http.Response('Error', 408); });
   }
 
   Future<http.Response> delete({required String endpoint, required Map<String, String> headers, Map<String, dynamic> body = const {}}) {
@@ -48,6 +51,6 @@ class HttpClient {
         Uri.parse("$base$endpoint"),
         headers: headers,
         body: jsonEncode(body)
-    );
+    ).timeout(defaultTimeoutDuration, onTimeout: () { return http.Response('Error', 408); });
   }
 }
