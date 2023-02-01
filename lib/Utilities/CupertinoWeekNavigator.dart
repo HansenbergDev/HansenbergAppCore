@@ -14,6 +14,10 @@ class CupertinoWeekNavigator {
     _navigateToWeek(week - 1);
   }
 
+  void toCurrentWeek() {
+    _navigateToWeek(week);
+  }
+
   void _navigateToWeek(int week) {
     Navigator.of(context).pushReplacementNamed('$week');
   }
