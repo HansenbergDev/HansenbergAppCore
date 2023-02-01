@@ -38,13 +38,8 @@ class MenuClient {
         },
     );
 
-    if (response.statusCode == 200) {
-      if (response.body.isNotEmpty) {
-        return Menu.fromJson(jsonDecode(response.body));
-      }
-      else {
-        return null;
-      }
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      return Menu.fromJson(jsonDecode(response.body));
     }
     else {
       print('Failed to get menu: ${response.statusCode}, ${response.body}');

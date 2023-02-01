@@ -28,14 +28,6 @@ class EnlistmentClient {
     );
 
     return response.statusCode == 200;
-
-    if (response.statusCode == 200) {
-      return true;
-      throw Exception("Failed to update enlistment: ${response.statusCode}, ${response.body}");
-    }
-    else {
-      return false;
-    }
   }
 
   Future<bool> createEnlistment(int year, int week, Enlistment enlistment, String token) async {
@@ -57,10 +49,6 @@ class EnlistmentClient {
     );
 
     return response.statusCode == 201;
-
-    if (response.statusCode != 201) {
-      throw Exception("Failed to create enlistment: ${response.statusCode}, ${response.body}");
-    }
   }
 
   Future<Enlistment?> getEnlistment(int year, int week, String token) async {
@@ -75,44 +63,36 @@ class EnlistmentClient {
         }
     );
 
-    if (response.statusCode == 200) {
-      if (response.body.isNotEmpty) {
-        return Enlistment.fromJson(jsonDecode(response.body));
-      }
-      else {
-        return null;
-      }
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      return Enlistment.fromJson(jsonDecode(response.body));
     }
     else {
       print("Failed to get enlistment: ${response.statusCode}, ${response.body}");
       return null;
     }
   }
-  
-  
 
-  // Future<List<Enlistment>> getEnlistmentAll(String token) async {
-  //   final response = await httpClient.get(
-  //       '/student/enlistment',
-  //       <String, String> {},
-  //       <String, String> {
-  //         'x-access-token': token
-  //       }
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     List<Map<String, dynamic>> json = jsonDecode(response.body);
-  //
-  //     List<Enlistment> result = [];
-  //
-  //     for (var element in json) {
-  //       result.add(Enlistment.fromJson(element));
-  //     }
-  //
-  //     return result;
-  //   }
-  //   else {
-  //     throw Exception('Failed to get enlistments: ${response.statusCode}, ${response.body}');
-  //   }
-  // }
+  Future<int?> getEnlistmentsOfDay(String day, int week, int year, String token) async {
+    if (day != 'monday' && day != 'tuesday' && day != 'wednesday' && day != 'thursday' && day != 'friday') {
+      return null;
+    }
+
+    final response = await httpClient.get(
+        endpoint: '/staff/enlistment/day',
+        headers: <String, String> {
+          'x-access-token': token
+        },
+        params: <String, String> {
+          'day': day,
+          'week': '$week',
+          'year': '$year'
+        }
+    );
+
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      return jsonDecode(response.body)['count'];
+    }
+
+    return null;
+  }
 }
